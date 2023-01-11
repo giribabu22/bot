@@ -31,7 +31,7 @@ bot_username = '@jumble_word_bot'  # bot username
 def restartGame():
     common.joinFlag = True  # to block joining patrticipants after 60 seconds
     # common.chat_type = None
-    common.gameCounter = 0
+    common.gameCounter = 7
     common.game_creater = {}
     common.participants = []
     common.nextButtonCount = False
@@ -56,8 +56,9 @@ def restartGame():
 
 
 def ErrorHandler(er):
+    global bot_username
     restartGame()
-    bot.send_message(common.chat_id, f'''Server is down try again start the game /jumbleword@lazydynamo_bot \n  {er}''',
+    bot.send_message(common.chat_id, f'''Server is down try again start the game /jumbleword@{bot_username} \n  {er}''',
                      parse_mode='markdown'
                      )
 
@@ -109,15 +110,16 @@ def controleNextBtn(message, bool):
             ErrorHandler(e)
 
     elif common.gameCounter >= 10:
-        common.runner = 3
-        common.time_breaker = False
-        common.scour_Dict[message.from_user.id]['points'] += 2
-        if message.from_user.id in common.red_scour:
-            del common.red_scour[message.from_user.id]
+        if common.wait60sec > 1:
+            common.runner = 3
+            common.time_breaker = False
+            common.scour_Dict[message.from_user.id]['points'] += 2
+            if message.from_user.id in common.red_scour:
+                del common.red_scour[message.from_user.id]
 
-        # for std in common.red_scour:
-        #     if std in common.scour_Dict:
-        #         common.scour_Dict[std]["points"] += 1
+            # for std in common.red_scour:
+            #     if std in common.scour_Dict:
+            #         common.scour_Dict[std]["points"] += 1
 
         threads = threading.Thread(target=common.start_timer, args=(
             'ques-wait', 1, 'join-jumble', message))
@@ -370,7 +372,6 @@ def main():
     @bot.message_handler(content_types=['text'])
     def send_welcome(message):
         msg = message.text
-        print(common.gessWord, '??????????????')
         print(msg, common.word)
         keyboard = telebot.types.InlineKeyboardMarkup()
         try:
