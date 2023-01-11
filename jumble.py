@@ -31,7 +31,7 @@ bot_username = '@jumble_word_bot'  # bot username
 def restartGame():
     common.joinFlag = True  # to block joining patrticipants after 60 seconds
     # common.chat_type = None
-    common.gameCounter = 7
+    common.gameCounter = 0
     common.game_creater = {}
     common.participants = []
     common.nextButtonCount = False

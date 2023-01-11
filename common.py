@@ -40,9 +40,10 @@ sec60 = 60
 DB = DB_class.DynamoDB_con()
 # DB.read_read('TB_JumbleWord_Bank')
 
+
 def get_jumble():
     try:
-        global word, gameCounter, runner,gessWord
+        global word, gameCounter, runner, gessWord
         # words = ['furze', 'fuses', 'fusee', 'fused', 'fusel', 'fuser', 'fussy', 'gales', 'galls', 'gamba', 'gamer', 'gamin']
         word = random.choices(words)[0].upper()
         jumble = ' '.join(random.sample(word, len(word)))
@@ -61,14 +62,15 @@ def get_jumble():
     except Exception as e:
         jumble.ErrorHandler(e)
         print('error in get_jumble function :@@@@@@@@@@@@ ', e)
-        
+
 # # Join timer (60s) and word timer (40s)
+
 
 def start_timer(name, sec, game, message):
     try:
-        global wait60sec, runner,word
+        global wait60sec, runner, word
         for i in range(sec, -1, -1):
-            print(i,'--',sec)
+            print(i, '--', sec)
             if time_breaker:
                 break
             time.sleep(1)
@@ -88,7 +90,7 @@ def start_timer(name, sec, game, message):
                     runner == 2
                 elif name == 'ques-wait' and runner == 3:  # after 40 sec of 1 word
                     jumble.winner(message, False)
-                elif  name == 'ques-wait' and runner == 0:
+                elif name == 'ques-wait' and runner == 0:
                     jumble.winner(message, False)
                 break
     except Exception as e:
