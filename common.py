@@ -42,7 +42,7 @@ DB = DB_class.DynamoDB_con()
 
 def get_jumble():
     try:
-        global word, gameCounter, runner
+        global word, gameCounter, runner,gessWord
         # words = ['furze', 'fuses', 'fusee', 'fused', 'fusel', 'fuser', 'fussy', 'gales', 'galls', 'gamba', 'gamer', 'gamin']
         word = random.choices(words)[0].upper()
         jumble = ' '.join(random.sample(word, len(word)))
@@ -56,6 +56,7 @@ def get_jumble():
                 jumbled += '_ '
         gameCounter += 1
         runner = 1
+        gessWord = word
         return f'🔤 {len(word)} letters: *{jumble}* \n 🤔 : *{" ".join(jumbled)}*'
     except Exception as e:
         jumble.ErrorHandler(e)
@@ -67,8 +68,7 @@ def start_timer(name, sec, game, message):
     try:
         global wait60sec, runner,word
         for i in range(sec, -1, -1):
-            print(i,'>>>>',sec)
-            # print("name: ",name)
+            print(i,'--',sec)
             if time_breaker:
                 break
             time.sleep(1)
@@ -90,9 +90,6 @@ def start_timer(name, sec, game, message):
                     jumble.winner(message, False)
                 elif  name == 'ques-wait' and runner == 0:
                     jumble.winner(message, False)
-                # elif name == 'ques-wait'and (runner):
-                #     jumble.winner(message, False)
-                #     runner = False
                 break
     except Exception as e:
         print('error in start_timer function @@@@@@@@@@@@@@', e)

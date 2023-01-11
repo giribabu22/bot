@@ -16,7 +16,6 @@ load_dotenv()
 
 DB = DynamoDB_con()
 
-# r = 60
 common.game_creater = {}
 common.participants = []
 common.scour_Dict = {}
@@ -116,12 +115,12 @@ def controleNextBtn(message, bool):
         if message.from_user.id in common.red_scour:
             del common.red_scour[message.from_user.id]
 
-        for std in common.red_scour:
-            if std in common.scour_Dict:
-                common.scour_Dict[std]["points"] += 1
+        # for std in common.red_scour:
+        #     if std in common.scour_Dict:
+        #         common.scour_Dict[std]["points"] += 1
 
         threads = threading.Thread(target=common.start_timer, args=(
-            'ques-wait',1, 'join-jumble', message))
+            'ques-wait', 1, 'join-jumble', message))
         common.word = ''
         try:
             threads.start()
@@ -371,7 +370,7 @@ def main():
     @bot.message_handler(content_types=['text'])
     def send_welcome(message):
         msg = message.text
-
+        print(common.gessWord, '??????????????')
         print(msg, common.word)
         keyboard = telebot.types.InlineKeyboardMarkup()
         try:
@@ -382,11 +381,9 @@ def main():
         else:
             print('count', common.gameCounter)
             if common.wait60sec == 0 or common.wait60sec == 1:
-                common.gessWord = common.word
                 common.word = ''
             if common.wait60sec > 1:
                 if (msg.upper() == common.word):
-                    common.gessWord = common.word
                     common.word = ''
                     common.time_breaker = True
                     time.sleep(1)
